@@ -22,18 +22,36 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
+int pos[N] ;
 signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0) ;
-    int t ;
-    cin>>t ;
-    while(t-- > 0 )
+    int n ;
+    cin>>n ;
+    vpii v ;
+    f(i,0,n)
     {
-       int a ;
-       cin>>a ;
-       cout<<a ; 
+        int a;
+        cin>>a;
+        v.push_back({a , i+1});
     }
+    stack<pii> st ;
+    for( int i = 0 ; i < n ; i++ )
+    {
+        // if( st.empty())pos[i] = 0 ;
+        while(!(st.empty()) && st.top().first >= v[i].first )st.pop() ;
+        if( st.empty())
+        {
+            pos[i] = 0 ;
+            st.push(v[i]) ;
+        }
+        else 
+        {
+            pos[i] = st.top().second ;
+            st.push(v[i]) ;
+        }
+    }
+    for( int i = 0 ; i < n ;i++)cout<<pos[i]<<" ";
     return 0;
 }

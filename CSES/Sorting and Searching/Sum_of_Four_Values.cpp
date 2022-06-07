@@ -36,5 +36,20 @@ signed main()
         cin>>a;
         v.push_back(a);
     }
+    map<int , pii> m ;
+    for( int i = 0 ; i < n ; i++ )
+    {
+        for( int j = i+1 ; j < n ;j++ )
+        {
+            int k1 = x - v[i] - v[j] ;
+            if( m.count(k1))
+            {
+                cout<<m[k1].first + 1 << " " << m[k1].second + 1 << " "<< i + 1 << " "<<j+ 1<<endl ;
+                return 0 ;
+            }
+        }
+        for( int j = 0 ; j < i ; j++ )m[v[i] + v[j]] = { i , j } ;
+    }
+    cout<<"IMPOSSIBLE\n" ;
     return 0;
 }

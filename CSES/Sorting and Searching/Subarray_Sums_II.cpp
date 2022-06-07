@@ -22,18 +22,35 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
+int pref[N] ;
 signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0) ;
-    int t ;
-    cin>>t ;
-    while(t-- > 0 )
+    int n , x;
+    cin>>n >> x;
+    vi v ;
+    f(i,0,n)
     {
-       int a ;
-       cin>>a ;
-       cout<<a ; 
+        int a;
+        cin>>a;
+        v.push_back(a);
+        pref[i+1] = pref[i] + a ;
     }
+    int cnt = 0 , sum = 0 ;
+    mii m ;
+    // for( int i = 1 ; i <= n ; i++ )cout<<pref[i] << " ";
+    // cout<<endl;
+    m[0] = 1 ;
+    for( int i = 1 ; i <= n ; i++)
+    {
+        if(m[pref[i]] - x)
+        {
+            cnt += m[pref[i] - x] ;
+            m[pref[i]]++ ;
+        }
+        else m[pref[i]]++ ;
+    }
+    cout<<cnt<<endl;
     return 0;
 }

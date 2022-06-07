@@ -27,13 +27,31 @@ signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0) ;
-    int t ;
-    cin>>t ;
-    while(t-- > 0 )
+    int n , x;
+    cin>>n >> x;
+    vi v ;
+    f(i,0,n)
     {
-       int a ;
-       cin>>a ;
-       cout<<a ; 
+        int a;
+        cin>>a;
+        v.push_back(a);
     }
+    int cnt = 0 , sum = 0 , i , j;
+    for( i = 0 , j = 0 ; j < n ; j++ )
+    {
+        sum += v[j] ;
+        while( sum > x  &&  i <= j ) 
+        {
+            sum -= v[i] ;
+            i++ ;
+        }
+        if( sum == x )cnt++ ;
+    } 
+    for( ; i < n ; i++ )
+    {
+        sum = sum - v[i] ;
+        if( sum == x)cnt++ ;
+    }
+    cout<<cnt<<endl;
     return 0;
 }
