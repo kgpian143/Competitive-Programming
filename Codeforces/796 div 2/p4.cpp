@@ -35,13 +35,14 @@ signed main()
         {
             ans = accumulate(all(v) ,  ans) ;
             ans += k*n ;
-            ans =  ans  - ((n*(n+1))>>1) ;
+            ans =  ans  - ((n*(n+1))/2) ;
         }
         else 
         {
             int max_sum = 0 ;
-            for( int i = 1 ; i <= n ; i++ )pref[i] += pref[i-1] ;
+            for( int i = 1 ; i <= n ; i++ )pref[i] = pref[i-1] + v[i-1] ;
             for( int i = 0 ; i <= n - k  ; i++ )max_sum = max( max_sum , pref[i + k ] - pref[i]);
+            ans = max_sum ;
             ans += (k * (k-1))/2 ;
         }
         cout<<ans<<endl;

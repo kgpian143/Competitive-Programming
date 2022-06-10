@@ -42,8 +42,8 @@ signed main()
     {
         cin>>t[i]>>z[i]>>y[i] ;
     }
-    int l = 0 ;
-    int h =  1e8 ;
+    int l = -1 ;
+    int h =  1e12 + 1 ;
     while( h - l  > 1 )
     {
         int m = ( l + h )/2 ;
