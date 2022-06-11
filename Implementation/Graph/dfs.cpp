@@ -30,7 +30,7 @@ void dfs(int vertex)
     vis[vertex] = true ;
     for( auto child : graph[vertex])
     {
-        if( vis[child] )return ;
+        if( vis[child] )continue;
         dfs(child) ;
     }
 }
