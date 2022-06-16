@@ -17,7 +17,11 @@ typedef long double ld;
 typedef long long ll;
 typedef vector<vector<int>> vvi;
 typedef vector<pii> vpii;
-
+struct segment 
+{
+    long long int val ;
+    long long int assign ;
+};
 class SegmentTree
 {
 private:
@@ -32,7 +36,7 @@ private:
     {
         return (l <= st && end <= r);
     }
-    long long int ans;
+    segment ans;
 
 public:
     SegmentTree(int st1, int end1)
@@ -45,7 +49,8 @@ public:
     {
         if (st == end)
         {
-            ans = v[st];
+            ans.val = v[st];
+            ans.assign = -1 ;
             return;
         }
         else
@@ -56,49 +61,71 @@ public:
                 right = new SegmentTree(mid + 1, end);
             left->build(v);
             right->build(v);
-            ans = 0;
+            ans.assign = -1;
+            ans.val =  left->ans.val + right->ans.val  ;
+        }
+    }
+    void propagate()
+    {
+        if( st == end)
+        {
+            ans.val = ans.assign ;
+            ans.assign = -1 ;
+        }
+        else 
+        {
+            ans.val = ans.assign * ( end - st + 1) ;
+            left->ans.assign = ans.assign ;
+            right->ans.assign = ans.assign ;
+            ans.assign = -1 ;
+        }
+    }
+    void update(int val, int l, int r)
+    {
+        if(ans.assign != -1)propagate() ;  
+        if (isOut(l, r))
+            return;
+        if (isIn(l, r))
+        {
+            ans.assign = val ;
+            propagate() ;
+            return ;
+        }
+        else
+        {
+            left->update(val, l, r);
+            right->update(val, l, r);
+            ans.val = ( left->ans.val + right->ans.val  ) ;
         }
     }
     long long int getValue(int pos)
     {
         if (st == end)
-            return ans;
-        if (ans != 0)
+            return ans.val;
+        if (ans.assign != -1)
         {
-            left->ans += ans;
-            right->ans += ans;
-            ans = 0;
+            propagate() ;
         }
         if (mid >= pos)
             return left->getValue(pos);
         else
             return right->getValue(pos);
     }
-    void update(int val, int l, int r)
-    {
-        if (isOut(l, r))
-            return;
-        if (isIn(l, r))
-        {
-            ans += val;
-        }
-        else if (st == end)
-        {
-            ans += val;
-        }
-        else
-        {
-            left->update(val, l, r);
-            right->update(val, l, r);
-        }
-    }
     long long int getrangesum(int l, int r)
     {
+        if(ans.assign != -1)propagate() ;
         if (isOut(l, r))
             return 0;
+        
+        if( st == end )
+        {
+            return ans.val;
+        }
         if (isIn(l, r))
-            return ans;
-        return left->getrangesum(l, r) + right->getrangesum(l, r);
+        {
+            return ans.val ;
+        }    
+        return (left->getrangesum(l, r) + right->getrangesum(l, r));
     }
 };
 
