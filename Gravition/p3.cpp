@@ -21,30 +21,27 @@ typedef vector<pii> vpii;
 #define lb lower_bound
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
-const int N = 2e5 + 5; 
-
-void solve() 
+const int N = 1e5 + 5; 
+int bit[N][32] ;
+int solution( vector<int> &A , vector<int> &B  )
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n = A.size() ; 
+    int m = B.size() ; 
+    sort(A.begin() , A.end() ) ;
+    sort(B.begin() , B.end() ) ;
+    int sum1 = accumulate( A.begin() , A.end() , 0 ) ;
+    int sum2 = accumulate( B.begin() , B.end() , 0 ) ;
+    int cnt = 0 ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( abs( 6 - A[i] ) + sum1 >= sum2 ) 
+        {
+            cnt++ ; 
+            return cnt  ;
+        }
+        sum1 += abs( 6 - A[i]) ;
+        cnt++ ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
 }
 signed main()
 {

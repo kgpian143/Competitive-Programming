@@ -23,28 +23,28 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+class node {
+public:
+    int data;
+    node* left;
+    node* right;
+};
+ 
+// A utility function to create a node
+node* newNode(int data)
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
-    }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    node* temp = new node();
+ 
+    temp->data = data;
+    temp->left = temp->right = NULL;
+ 
+    return temp;
+}
+
+node *bst( int pre[] , int n )
+{
+    node *temp = NULL ; 
+    if( n == 0 ) 
 }
 signed main()
 {

@@ -22,29 +22,29 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
+int solution( vector<int> & v , int s  )
+{
+    int n =v.size() ;
+    for( int i = 0 ; i < v.size() ; i++ )
+    {
+        v[i] -= s ; 
+    }
+    int cnt = 0, sum = 0;
+    map<int, int> mp; 
+    for (int i = 0; i < n; i++) {
+        sum += v[i];
+        if (sum == 0)
+            cnt++;
+        if (mp.find(sum) != mp.end())
+            cnt += mp[sum];
+        mp[sum]++;
+    }
+    if( cnt > 1e9 )cnt = 1e9 ;
+    return cnt ;
+}
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
-    }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    
 }
 signed main()
 {

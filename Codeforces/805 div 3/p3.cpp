@@ -27,49 +27,33 @@ void solve()
 {
     int n, k;
     cin >> n >> k;
-    string s;
-    cin >> s;
-    vi v(n, 0);
-    int cnt = 0;
-    for (int i = 0; i < n - 1 ; i++)
+    map<int, pii> m;
+    for (int a = 0; a < n; a++)
     {
-        if( cnt == k )
+        int i;
+        cin >> i;
+        if (m[i].first == 0)
         {
-            if( k % 2 == 0 )break;
-            for( int j = i ; j < n - 1 ; j++)
-            {
-               if( k & 1 ) s[j] = (1 ^ ( s[j] - '0' )) + '0' ;
-            }
-            break ; 
+            m[i].first = a + 1;
+            m[i].second = a + 1;
         }
-        if ((k & 1))
+        else
         {
-            if (s[i] == '1')
-            {
-                v[i] = 1;
-                cnt++;
-            }
-            else s[i] = '1' ;
-        }
-        else 
-        {
-            if( s[i] == '0' )
-            {
-                v[i] = 1  ;
-                cnt++ ;
-                s[i] = '1'  ; 
-            }
+            m[i].first = min(m[i].first, a + 1);
+            m[i].second = max(m[i].second, a + 1);
         }
     }
-    if( (cnt & 1)  )
+    while (k-- > 0)
     {
-        if( s[n-1] == '0')s[n-1] = '1' ; 
-        else s[n-1] = '0' ;
+        int a, b;
+        cin >> a >> b;
+        if (m[a].first == 0 || m[b].first == 0)
+            cout << "NO" << endl;
+        else if (m[a].first < m[b].second)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
-    v[n-1] = k - cnt  ; 
-    cout<<s<<endl; 
-    for( auto it : v )cout<<it<<" ";
-    cout<<endl ;
 }
 signed main()
 {

@@ -25,27 +25,45 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ,  x  ; 
+    cin>>n >>  x ; 
+    vi v(n , 0 ) ; 
+    f( i , 0 , n )cin>>v[i] ; 
+    int l = N , r =  0 ;
+    int sum = 0 ; 
+    for( int i = 0 ; i < n -1 ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        sum += abs(v[i] - v[i-1]) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    for( int i = 0 ; i < n - 1 ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( v[i] <=  x ) 
+        {
+            if( v[i + 1]  <  x )
+            {
+                int a  = min(v[i] , v[i+1]) ; 
+                int b  = max( v[i] , v[i+1]) ; 
+                l = min( l ,  a) ;
+                r = max( r  , b ) ; 
+            }
+            else 
+            {
+                l = min( l ,  v[i] ) ; 
+                r = max( r ,  x ) ;
+            }
+        }
+        if( l != 0 ) 
+        {
+            sum += l - 
+            cout<<sum<<endl; 
+            return ;
+        }
+        else  
+        {
+             
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+}  
 signed main()
 {
     ios::sync_with_stdio(false);

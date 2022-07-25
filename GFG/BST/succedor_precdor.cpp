@@ -22,29 +22,47 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+	int key;
+	struct Node *left, *right;
+};
+// */
+
+// This function finds predecessor and successor of key in BST.
+// It sets pre and suc as predecessor and successor respectively
+Node *rightchild( Node *root )
+{
+    if( !root->right )return root ;
+    else return rightchild( root->right) ;
+}
+Node *leftchild( Node *root )
+{
+    if( !root->left )return root ;
+    else return leftchild( root->left) ;
+}
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+
+// Your code goes here
+    if( root == NULL )return ;
+    if( root->key == key )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( root->right )suc = rightchild( root->right);
+        if( root->left )pre = leftchild( root->left);
+        return ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    else if( root->key > key )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        suc = root ;
+        findPreSuc( root->left , pre , suc , key ) ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    else 
+    {
+        pre = root ;
+        findPreSuc( root->left , pre , suc , key ) ;
+    }
+
 }
 signed main()
 {

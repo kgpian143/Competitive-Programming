@@ -23,28 +23,52 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
+
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    map<string , bool> mp ; 
+    map<string , tuple< int , int , int >> data ;
+    int n , m ;
+    cin>>n>>m ; 
+    f( i , 0 , n)
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        string s  ;
+        cin>>s  ;
+        for( int j = 0 ; j < m ; j++ )
+        {
+            string t ;
+            t = s[j] ;
+            f( k , 1 , 3 )
+            {
+                if( k+j >= m )continue; 
+                t += s[j+k] ;
+                if( !mp[t] )
+                {
+                    mp[t] = true  ;
+                    data[t] = make_tuple( j , j+k , i ) ;
+                }
+            }
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    string s ;
+    cin>>s ;
+    vector<tuple<int , int , int > > ans ;
+    vi dp( m+1 , 0 ) ; 
+    dp[0] = 1  ;
+    // dp[1]
+    for( int i = 2 ; i < m ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( dp[i-2] )
+        {
+            string str = s.substr(i-2 , 2 ) ;
+            if( mp[str] )ans.push_back(data[str]) ;
+        }
+        else if( i - 3 >= 0 && dp[i-3] )
+        {
+            
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+
 }
 signed main()
 {

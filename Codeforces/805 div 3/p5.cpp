@@ -22,29 +22,50 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
+bool dfs( int v , int par ,  vb &vis , vi g[] , int h )
+{
+    vis[v] = true  ;
+    bool ans = true  ; 
+    if( g[v].size() != 2  )return false  ;
+    for( auto it : g[v] )
+    {
+        if( vis[it] )
+        {
+            if( it != par  )
+            { 
+                if( h & 1 )return false  ;
+                else return true  ;
+            }
+            else continue;
+        }
+        return dfs( it , v , vis  , g , h+1 ) ; 
+    }
+    return ans  ;
 
+}
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>>n ; 
+    vi g[n+1] ;
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
-    }
-    // b = b - rem ; 
-    while( b-- > 0)
+        int u , v ; 
+        cin>>u>>v ; 
+        g[u].push_back(v) ; 
+        g[v].push_back(u) ; 
+    } 
+    vb vis( n +1 , false ) ;
+    for( int i = 1  ; i <= n ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( vis[i] )continue; 
+        if( !dfs( i , -1 , vis , g , 1 ) )
+        {
+            cout<<"NO"<<endl;
+            return  ;
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<"YES"<<endl; 
 }
 signed main()
 {

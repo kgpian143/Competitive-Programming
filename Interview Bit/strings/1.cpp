@@ -23,28 +23,34 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
-{
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+int solve(string A) {
+    // int mod = 1e9 + 7 ;
+    int n = A.size() ;
+    int count_vow[n+1] , count_cons[n+1] ;
+    count_vow[0] = 0 ;
+    count_cons[0] = 0 ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( A[i] == 'a' || A[i] == 'e' ||  A[i] == 'i' || A[i] == 'o'||  A[i] == 'u' )
+        {
+            count_vow[i+1] = count_vow[i] + 1 ;
+            count_cons[i+1] = count_cons[i] ;
+        }
+        else 
+        {
+            count_vow[i+1] = count_vow[i] ;
+            count_cons[i+1] = count_cons[i] + 1 ;
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    int ans = 0 ;
+    for( int i = 0 ; i < n ; i++  )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( A[i] == 'a' || A[i] == 'e' ||  A[i] == 'i' || A[i] == 'o'||  A[i] == 'u' ) 
+        {
+            ans = (ans + count_cons[n] - count_cons[i] ) % mod ; 
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    return ans  ;
 }
 signed main()
 {
@@ -54,7 +60,10 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        string s  ;
+        cin>>s ;
+        int a = solve(s);
+        cout<<a<<endl;
     }
     return 0;
 }

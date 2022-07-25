@@ -25,51 +25,36 @@ const int N = 2e5 + 5;
 
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
-    string s;
-    cin >> s;
-    vi v(n, 0);
-    int cnt = 0;
-    for (int i = 0; i < n - 1 ; i++)
+    int n, m;
+    cin >> n >> m;
+    int dp[n][m] , a[4][4] ;
+    for( int i = 0 ; i < 4 ; i ++ )
     {
-        if( cnt == k )
+        for( int j = 0 ; j < 4 ; j++ )
         {
-            if( k % 2 == 0 )break;
-            for( int j = i ; j < n - 1 ; j++)
+            if( j == i || j == 3 - i )
             {
-               if( k & 1 ) s[j] = (1 ^ ( s[j] - '0' )) + '0' ;
+                a[i][j] = 1 ;
             }
-            break ; 
-        }
-        if ((k & 1))
-        {
-            if (s[i] == '1')
-            {
-                v[i] = 1;
-                cnt++;
-            }
-            else s[i] = '1' ;
-        }
-        else 
-        {
-            if( s[i] == '0' )
-            {
-                v[i] = 1  ;
-                cnt++ ;
-                s[i] = '1'  ; 
-            }
+            else a[i][j] = 0 ;
         }
     }
-    if( (cnt & 1)  )
+    for (int i = 0; i < n; i++)
     {
-        if( s[n-1] == '0')s[n-1] = '1' ; 
-        else s[n-1] = '0' ;
+        for (int j = 0; j < m; j++)
+        {
+           dp[i][j] = a[i%4][j%4] ;
+        }
+        // cout << endl;
     }
-    v[n-1] = k - cnt  ; 
-    cout<<s<<endl; 
-    for( auto it : v )cout<<it<<" ";
-    cout<<endl ;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cout << dp[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 signed main()
 {

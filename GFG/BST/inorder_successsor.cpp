@@ -23,29 +23,44 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int data;
+    struct Node *left;
+    struct Node *right;
+    struct Node *next;
+
+    Node(int x)
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        data = x;
+        left = NULL;
+        right = NULL;
+        next = NULL;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+};
+// */
+class Solution
+{
+public:
+    void traversal( Node *root , vector<Node * > &v )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( root == NULL )return  ;
+        traversal( root->left , v  ) ;
+        v.push_back(root) ;
+        // roo
+        traversal( root->right , v ) ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+    void populateNext(Node *root)
+    {
+        //code here
+        vector<Node *> v ;
+        traversal( root , v ) ;
+        for( int i = 0 ; i < v.size()- 1; i++ )
+        {
+            v[i]->next = v[i+1] ;
+        }
+    }
+};
 signed main()
 {
     ios::sync_with_stdio(false);

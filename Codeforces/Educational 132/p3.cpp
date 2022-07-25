@@ -22,54 +22,47 @@ typedef vector<pii> vpii;
 #define ub upper_bound
 #define all(v) v.begin(), v.end()
 const int N = 2e5 + 5;
-
+bool checkstr( string &s )
+{
+    int p = 0 ; 
+    f( i , 0 , s.size() )
+    {
+        if( s[i] == '(')p++ ; 
+        if( s[i] == ')')p-- ;
+        if( p < 0 )return false  ; 
+    }
+    if( p != 0 )return false  ; 
+    return true  ; 
+}
 void solve()
 {
-    int n, k;
-    cin >> n >> k;
     string s;
     cin >> s;
-    vi v(n, 0);
-    int cnt = 0;
-    for (int i = 0; i < n - 1 ; i++)
+    vi pos ; 
+    int op = (s.size() )>> 1  , cl = (s.size())>>1  ; 
+    for( int i = 0 ; i < s.size() ; i++ )
     {
-        if( cnt == k )
+        if( s[i] == '?')pos.push_back(i) ; 
+        else if( s[i] == '(')op-- ; 
+        else cl-- ; 
+    }
+
+    for( int i = 0 ; i < pos.size() ; i++ )
+    {
+        if( i < op )s[pos[i]] = '(' ; 
+        else s[pos[i]] = ')' ; 
+    }
+    if( op > 0 && cl > 0 )
+    {
+        swap( s[pos[op-1]] , s[pos[op]] ) ; 
+        if( checkstr(s))
         {
-            if( k % 2 == 0 )break;
-            for( int j = i ; j < n - 1 ; j++)
-            {
-               if( k & 1 ) s[j] = (1 ^ ( s[j] - '0' )) + '0' ;
-            }
-            break ; 
-        }
-        if ((k & 1))
-        {
-            if (s[i] == '1')
-            {
-                v[i] = 1;
-                cnt++;
-            }
-            else s[i] = '1' ;
-        }
-        else 
-        {
-            if( s[i] == '0' )
-            {
-                v[i] = 1  ;
-                cnt++ ;
-                s[i] = '1'  ; 
-            }
+            cout<<"NO"<<endl ;
+            return ; 
         }
     }
-    if( (cnt & 1)  )
-    {
-        if( s[n-1] == '0')s[n-1] = '1' ; 
-        else s[n-1] = '0' ;
-    }
-    v[n-1] = k - cnt  ; 
-    cout<<s<<endl; 
-    for( auto it : v )cout<<it<<" ";
-    cout<<endl ;
+    cout<<"YES"<<endl ; 
+    return  ; 
 }
 signed main()
 {

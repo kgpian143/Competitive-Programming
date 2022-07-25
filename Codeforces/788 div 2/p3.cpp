@@ -25,26 +25,46 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>> n ; 
+    int child[n+1] ;
+    vi a(n + 1 , 0) , b(n + 1 , 0 ) , d( n + 1 , 0 ); 
+    f( i , 0 , n )cin>>a[i] ;  
+    f( i , 0 , n )cin>>b[i] , child[a[i]] = b[i] ; 
+    f( i , 0 , n )cin>>d[i] ; 
+    vi hsh( n + 1 , 0 ) ;
+    int ans = 1 ; 
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( hsh[a[i]] )continue;
+        if( d[i] != 0 || a[i] == b[i])
+        {
+            hsh[a[i]] = 1 ;
+            int p = child[a[i]] ;
+            while( p != a[i])
+            {
+                hsh[p] = 1 ;
+                p = child[p] ;
+            }
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( hsh[a[i]] )continue;
+        // cout<<"okk\n" ;
+        if( d[i] == 0 )
+        {
+            hsh[a[i]] = 1 ;
+            int p = child[a[i]] ;
+            while( p != a[i])
+            {
+                hsh[p] = 1 ;
+                p = child[p] ;
+            }
+        }
+        ans = (ans*2) % mod  ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<ans<<endl;
 }
 signed main()
 {

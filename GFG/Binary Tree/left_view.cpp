@@ -23,28 +23,45 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+};
+
+//Function to return a list containing elements of left view of the binary tree.
+vector<int> leftView(Node *root)
+{
+   // Your code here
+   vector<int> ans ;
+   stack<pair< Node* , int > > st  ;
+   int max_level = 0 ;
+   st.push({ root , 1 } ) ;
+   while( !st.empty())
+   {
+       pair< Node* , int > p = st.top() ;
+       st.pop() ;
+       if( p.second > max_level )
+       {
+          max_level = p.second ;
+          ans.push_back( p.first->data ) ;
+       }
+       if( p.first->left != NULL )
+       {
+           st.push({ p.first->left , p.second + 1 }) ;
+       }
+       if( p.first->right != NULL )
+       {
+           st.push({ p.first->right , p.second + 1 }) ;
+       }
+   }
+   return ans  ;
 }
 signed main()
 {
@@ -54,7 +71,7 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        // solve();
     }
     return 0;
 }

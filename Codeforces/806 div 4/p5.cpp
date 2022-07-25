@@ -25,26 +25,42 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>> n  ; 
+    char g[n+1][n+1] ; 
+    vvi vis( n + 1 ,  vi( n + 1 , 0 )) ; 
+    map< pii , pii > m ; 
+    int cnt = 0 ; 
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        f( j , 0 , n )cin>>g[i][j] ; 
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        f( j , 0 , n )
+        {
+            if( vis[i][j] )continue ; 
+            else 
+            {
+                int cnt0 = 0 ; 
+                int cnt1 = 0 ; 
+                int i1 = i , j1 = j ; 
+                if( g[i1][j1] == '0')cnt0++ ; 
+                else cnt1++ ; 
+                for( int i = 0 ; i < 3  ; i++ )
+                {
+                    int temp = i1 ; 
+                    i1 = j1  ; 
+                    j1 = n - 1  - temp ; 
+                    vis[i1][j1]++ ; 
+                    if( g[i1][j1] == '0')cnt0++ ; 
+                    else cnt1++ ;
+                }
+                cnt += min( cnt0 , cnt1 ) ; 
+            }
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<cnt<<endl ; 
 }
 signed main()
 {

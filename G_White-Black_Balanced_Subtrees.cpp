@@ -22,29 +22,44 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
+void dfs( int v , int par , vi g[] , vpii & vp , string s)
+{ 
+    pii p ;
+    p.first = 0 ;
+    p.second = 0 ;
+    for( auto it : g[v] )
+    {
+        if( it == par)continue; 
+        dfs(it , v , g , vp , s ) ;
+        p.first += vp[it].first ;
+        p.second += vp[it].second ;
+    }
+    if( s[v-1] == 'W')p.first++ ;
+    else p.second++ ;
+    vp[v] = p ;
+}
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ;
+    cin>>n ;
+    vi g[n + 1] ;
+    vpii vp( n+1 , { 0 , 0 }) ;
+    f( i , 2 , n + 1 ) 
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        int a ;
+        cin>>a ;
+        g[a].push_back(i) ;
+        g[i].push_back(a) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    string s ;
+    cin>>s ;
+    dfs( 1 , -1 , g , vp , s  ) ;
+    int cnt = -1 ;
+    for( auto it : vp )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if(it.first == it.second)cnt++ ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<cnt<<endl;
 }
 signed main()
 {

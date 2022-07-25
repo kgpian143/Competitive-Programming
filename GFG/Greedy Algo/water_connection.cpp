@@ -22,30 +22,41 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
-void solve() 
+vector<pair<int , int>> g[N] ;
+int par[N] ;
+bool vis[N] ;
+int  dfs( int v , int &d )
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
-    }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    vis[v] = true ; 
+    if( g[v].size() == 0 )return v ;
+    d = min( g[v][0].second , d) ;
+    return dfs( g[v][0].first , d ) ;
 }
+vector<vector<int>> solve(int n,int p,vector<int> a,vector<int> b,vector<int> d)
+    {
+        // code here
+        for( int i = 0 ; i < p ; i++ )
+        {
+            g[a[i]].push_back({ b[i] , d[i] } ) ;
+            // g[b[i]].push_back(a[i]) ;
+            par[b[i]] = a[i] ; 
+        }
+        vector<vector<int>> ans ;
+        for( int i = 1 ; i <= n ; i++ )
+        {
+            if( par[i] == 0 )
+            {
+                int d = INT_MAX ;
+                int t = dfs( i , d ) ;
+                vector<int> v( 3 , 0 ) ;
+                v[0] = i ;
+                v[1] = t ;
+                v[2] = d ;
+                ans.push_back(v) ;
+            }
+        }
+        return ans ;
+    }
 signed main()
 {
     ios::sync_with_stdio(false);
@@ -54,7 +65,7 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        // solve();
     }
     return 0;
 }

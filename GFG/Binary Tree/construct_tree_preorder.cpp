@@ -23,29 +23,27 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+  int data;
+  Node* left;
+  Node* right;
+};
+// *
+class Solution{
+    public:
+    Node* buildTree(int in[],int pre[], int n)
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        // Code here
+        int ind = lower_bound( in , in + n , pre[0] ) - in ;
+        Node *temp ;
+        temp = ( Node *)malloc( sizeof(Node)) ;
+        temp->data = pre[0] ;
+        temp->left = buildTree( in ,  pre + 1 , ind ) ;
+        temp->right = buildTree( in + ind , pre + ind , n - ind - 1) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+};
+
 signed main()
 {
     ios::sync_with_stdio(false);

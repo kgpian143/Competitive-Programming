@@ -23,28 +23,43 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+	int data;
+	Node* left, *right;
+};
+// */
+// Your are required to complete this function
+// function should return root of the modified BST
+void traverse( Node *root , vector<int> &v ) 
+{
+    if( !root)return  ;
+    traverse( root->left , v ) ;
+    v.push_back(root->data ) ;
+    traverse( root->right , v ) ;
+}
+Node *arrTobst( vector<int> v , int l  , int h ) 
+{
+    if( l < 0 && h >= v.size() )return ;
+    if( l == h ) 
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        Node *temp = (Node*)malloc(sizeof(Node));
+        temp->left = temp->right = NULL ;
+        temp->data = v[l] ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    int mid = ( l + h )/2  ;
+    Node *temp  = (Node*)malloc(sizeof(Node));
+    temp->data = v[mid] ;
+    temp->left = arrTobst(v , l  , mid - 1 ) ;
+    temp->right = arrTobst( v, h , mid+ 1 ) ;
+    return temp ;
+}
+Node* buildBalancedTree(Node* root)
+{
+	// Code here
+    vector<int> v ;
+    traverse( root , v ) ;
+    Node *ans = arrTobst( v , 0 , (int)v.size()-1) ;
 }
 signed main()
 {

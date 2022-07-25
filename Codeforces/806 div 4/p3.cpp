@@ -25,26 +25,30 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>>n ; 
+    vi v( n , 0 ) ; 
+    f( i , 0 , n )cin>>v[i] ; 
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        int k ; 
+        cin>> k ; 
+        string s  ; 
+        cin>>s ; 
+        for( int j = s.size() - 1 ; j >= 0 ; j--  )
+        {
+            if( s[j] == 'D')
+            {
+                v[i] = ( v[i] + 1) % 10 ; 
+            }
+            else 
+            {
+                v[i] = ( v[i] + 9 ) % 10 ;  
+            }
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    for( auto it : v )cout<<it<<" "; 
+    cout<<endl ; 
 }
 signed main()
 {

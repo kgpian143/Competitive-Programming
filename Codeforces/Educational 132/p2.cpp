@@ -25,33 +25,36 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n , m ; 
+    cin>>n>> m ; 
+    vi v( n , 0 ) ; 
+    f( i , 0 , n )cin>>v[i] ; 
+    vi pref( n + 1 , 0 ) ; 
+    vi suff( n + 1 , 0 ) ; 
+    for( int  i = 0 ; i < n-1 ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( v[i+1] < v[i])pref[i+1] = pref[i] + v[i] - v[i+1] ; 
+        else pref[i+1] = pref[i] ;
+        if( v[i+1] > v[i] )suff[i+1] = suff[i] + v[i+1] - v[i] ; 
+        else suff[i+1] = suff[i] ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    while( m-- > 0 )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        int s  , t ; 
+        cin>>s>>t ;
+        if( s < t )
+        {
+            cout<<pref[t-1] - pref[s-1]<<endl  ; 
+        }
+        else cout<< suff[s-1] - suff[t-1]<<endl ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
 }
 signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0) ;
-    int t ;
-    cin>>t ;
+    int t = 1;
+    // cin>>t ;
     while(t-- > 0 )
     {
         solve();

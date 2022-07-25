@@ -25,26 +25,32 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ;
+    cin>> n ; 
+    vi v ( n , 0 ) ;
+    // multiset<int> st ;
+    mii mp ;
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        cin>>v[i] ;
+        // st.insert(v[i]) ;
+        mp[v[i]]++ ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    sort(all(v)) ;
+    int ans1[n+1] , ans2[n+1] , pref[n+1];
+    pref[0] = 0 ;
+    f( i , 0 , n )pref[i+1] = pref[i] + v[i] ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        int ind = v.end() - upper_bound(all(v) , i ) ;
+        int ind1 = upper_bound(all(v) , i ) - v.begin();
+        // int ind1 = v.end() - upper_bound(all(v) , i ) ;
+        ans1[i] = ind ;
+        // int ind1 = v.end() - upper_bound()
+        int k = n - mp[i] ;
+        ans2[i] = n*(k) - ( pref[n] - i*mp[i]) + ind  ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    for( int i = 0 ; i < n ; i++ )cout<<ans1[i] << " "<<ans2[i] << endl;
 }
 signed main()
 {

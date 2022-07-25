@@ -22,30 +22,46 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
-void solve() 
+bool checkstr( str)
+int solve(vector<string>& A)
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int res = 0;
+    int n = (int)A.size();
+    vector<string> str ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( checkstr( A[i] ))str.push_back(A[i]) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    int k = (int)str.size() ;
+    int total_subsets = 1 << k ; 
+    for(int i=0;i< total_subsets ;i++)
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        int sum = 0,cnt = 0;
+        set<char> set1;
+        int tmp = i;
+        for(int j=0;j<k;j++)
+        {
+            if(tmp&1)
+            {
+                for(auto it : str[j])
+                {
+                    set1.insert(it);
+                    sum++;
+                }
+                cnt++;
+            }
+            tmp *= 2 ;
+        }
+       
+        if(sum == (int)set1.size()&&cnt>=2)
+        {
+            res = max(res,sum);
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    return res; 
+    
 }
+
 signed main()
 {
     ios::sync_with_stdio(false);

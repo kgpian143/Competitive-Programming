@@ -23,28 +23,24 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+int maxMeetings(int start[], int end[], int n)
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    vector<pair<int , int >> vp ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        vp.push_back({ end[i] , start[i]}) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    sort( vp.begin() , vp.end()) ;
+    int cnt = 1 , ind = 0  ;
+    for( int i = 1 ; i < n ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( vp[i].second >= vp[ind].first )
+        {
+            cnt++ ;
+            ind = i ; 
+        }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    return cnt ;
 }
 signed main()
 {
@@ -54,7 +50,7 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        // solve();
     }
     return 0;
 }

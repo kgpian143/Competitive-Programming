@@ -25,26 +25,45 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n , m ; 
+    cin>>n>>m ;
+    int g[n][m] ; 
+    f( i , 0 , n )f( j , 0 , m )cin>>g[i][j] ; 
+    int mx = 0 ; 
+    f( i , 0,  n ) f( j , 0 , m )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        int cnt = 0 ;
+        int pos = 0 ;
+        while(1)
+        {
+            if( i + pos == n || j + pos >=  m )break;
+            cnt += g[i+pos][j+pos] ;
+            pos++ ;
+        }
+        pos = 1  ;
+        while(1)
+        {
+            if( i - pos < 0 || j - pos < 0 )break;
+            cnt += g[i-pos][j-pos] ;
+            pos++ ;
+        }
+        pos = 1 ;
+        while(1)
+        {
+            if( i + pos == n || j - pos < 0 )break;
+            cnt += g[i+pos][j-pos] ;
+            pos++ ;
+        }
+        pos = 1  ;
+        while(1)
+        {
+            if( i - pos < 0 || j + pos == m  )break;
+            cnt += g[i-pos][j+pos] ;
+            pos++ ;
+        }
+        mx  = max( mx ,cnt ) ; 
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<mx<<endl;
 }
 signed main()
 {

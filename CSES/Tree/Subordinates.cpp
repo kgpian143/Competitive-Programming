@@ -22,39 +22,34 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
-void solve() 
+int n ;
+vi g[N] ;
+// bool vis[N] ;
+int sub[N] ;
+void dfs(int vertex )
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    // vis[vertex] = true ;
+    int sum = 0 ; 
+    for( auto it : g[vertex])
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        dfs(it) ;
+        sum += sub[it] + 1;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    sub[vertex] = sum ;
 }
 signed main()
 {
     ios::sync_with_stdio(false);
     cin.tie(0) ;
-    int t ;
-    cin>>t ;
-    while(t-- > 0 )
+    cin>>n ;
+    // vi par(n
+    f(i,2,n+1)
     {
-        solve();
+        int a ;
+        cin>>a ;
+        g[a].push_back(i) ;
     }
-    return 0;
+    dfs(1) ;
+    f( i , 1 , n+1) cout<<sub[i]<< " ";
+        return 0;
 }

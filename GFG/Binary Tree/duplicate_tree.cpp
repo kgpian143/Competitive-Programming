@@ -23,29 +23,23 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+  char data;
+  struct Node* left;
+  struct Node* right;
+};
+
+class Solution {
+  public:
+    /*This function returns true if the tree contains 
+    a duplicate subtree of size 2 or more else returns false*/
+    int dupSub(Node *root) {
+         // code here
+        unordered_map< string , int > mp  ;
+        
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+};
 signed main()
 {
     ios::sync_with_stdio(false);

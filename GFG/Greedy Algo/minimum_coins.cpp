@@ -23,29 +23,26 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
-{
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+vector<int> minPartition(int N)
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        // code here
+        int arr[] = { 1 , 2 , 5 , 10 , 20 , 50 , 100 , 200 , 500 , 2000} ;
+        vector<pair<int , int >> vp ;
+        for( int i = 9 ; i >= 0 ; i++  )
+        {
+            if( arr[i] > N )continue ;
+            int cnt = N / arr[i] ;
+            vp.push_back( { arr[i] , cnt }) ;
+            N = N % arr[i] ;
+            if( N == 0 )break ;
+        }
+        vector<int> ans  ;
+        for( int i = 0 ; i < vp.size() ; i++ )
+        {
+            while( vp[i].second-- > 0 )ans.push_back(vp[i].first) ;
+        }
+        return ans  ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
 signed main()
 {
     ios::sync_with_stdio(false);
@@ -54,7 +51,10 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        // solve();
+        int n ;
+        cin>>n ;
+        vi  v = minPartition(n) ;
     }
     return 0;
 }

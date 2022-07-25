@@ -23,28 +23,37 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
+bool check( string s  ,  map<string , int > & m )
+{
+    for( int i = 0 ; i < s.size() ; i++ )
+    {
+        if( m[s.substr( 0 , i+1) ]   &&  m[s.substr( i + 1)] )
+        {
+            return true ; 
+        }
+    }
+    return false  ;
+}
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>>n ; 
+    map<string , int > m ; 
+    vector<string> vs ; 
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        string str  ; 
+        cin>>str ;
+        m[str]++ ; 
+        vs.push_back(str) ; 
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    string ans  ;
+    for( int i = 0 ; i < n ; i++ )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( check( vs[i] , m ))ans.push_back('1') ;
+        else ans.push_back('0') ; 
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<ans<<endl ; 
 }
 signed main()
 {

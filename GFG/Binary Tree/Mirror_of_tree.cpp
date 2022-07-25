@@ -22,30 +22,41 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
-
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+    int data;
+    struct Node* left;
+    struct Node* right;
+
+    Node(int x){
+        data = x;
+        left = right = NULL;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+}; 
+
+class Solution {
+  public:
+    // Function to convert a binary tree into its mirror tree.
+   
+    void mirror(Node* node) {
+        // code here
+       if (node == NULL) 
+        return; 
+    else
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+         Node* temp;
+        
+        /* do the subtrees */
+        mirror(node->left);
+        mirror(node->right);
+    
+        /* swap the pointers in this node */
+        temp     = node->left;
+        node->left = node->right;
+        node->right = temp;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+    }
+};
 signed main()
 {
     ios::sync_with_stdio(false);
@@ -54,7 +65,7 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        // solve();
     }
     return 0;
 }

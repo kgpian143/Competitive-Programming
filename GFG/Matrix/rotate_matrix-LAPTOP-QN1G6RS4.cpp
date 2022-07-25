@@ -21,30 +21,14 @@ typedef vector<pii> vpii;
 #define lb lower_bound
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
+#define getv(v,n) for( int i = 0 ; i < n ; i++)cin>>v[i];
+#define putv(v) for(auto it : v )cout<<it<<' ';
+#define getvv(v,n,m)for(int i = 0 ; i < n ; i++ )f(j,0 ,m)cin>>v[i][j] 
 const int N = 2e5 + 5; 
 
-void solve() 
+void solve( vector<vector> ) 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
-    }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    
 }
 signed main()
 {

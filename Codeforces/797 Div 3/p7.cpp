@@ -25,26 +25,41 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n , m ; 
+    cin>>n>>m ; 
+    vi v( n , 0 ) ; 
+    f( i , 0 , n )cin>>v[i] ; 
+    set<int> st ; 
+    f( i , 0 , n ) 
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        if( st.empty() || v[i] < v[*(st.rbegin())]) st.insert(i) ;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    for( int i = 0 ; i < m ; i++) 
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        int k , d  ;
+        cin>>k>>d ;
+        k-- ; 
+        v[k] = v[k] - d  ;  
+        auto it = st.upper_bound(k) ; 
+        if( it != st.begin())
+        {
+            it = prev(it) ; 
+            if( *it == k || v[k] < v[*it])st.insert(k) ;
+        }
+        // else 
+        // {
+        //     st.insert(k) ; 
+        // }
+        while(1)
+        {
+            auto it = st.upper_bound(k) ;
+            if( it == st.end())break ;
+            if( v[*it] >= v[k])st.erase(it) ;
+            else break; 
+        }
+        cout<<st.size()<<" ";
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    cout<<endl;
 }
 signed main()
 {

@@ -21,30 +21,48 @@ typedef vector<pii> vpii;
 #define lb lower_bound
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
-const int N = 2e5 + 5; 
-
+const int N = 2e5 + 5;  
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ; 
+    cin>>n ;
+    vi v ; 
+    vi  ans( n , 0 )  ;
+    f( i , 0 , n )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        int a  ; 
+        cin>>a ; 
+        v.push_back(a) ; 
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    sort( all(v)) ; 
+    if( n & 1 )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+         ans[2] = v[0] ; 
+         ans[n-1] =v[1] ; 
+         int k = 0 ;
+         for( int i = 2 ; i < n  ; i++ )
+         {
+             if( k == n-1 )break ;
+             if( k == 2 )k++ ; 
+             ans[k++] = v[i] ; 
+         }
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    else 
+    {
+         ans[2] = v[0] ; 
+         ans[n-2] =v[1] ; 
+         int k = 0 ;
+         for( int i = 2 ; i < n  ; i++ )
+         {
+             if( k == n-2 )k++ ;
+             if( k == 2.
+              )k++ ; 
+             ans[k++] = v[i] ; 
+         }
+    }
+    return ans ;
+   
+
 }
 signed main()
 {

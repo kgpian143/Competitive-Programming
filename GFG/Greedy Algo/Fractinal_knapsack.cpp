@@ -22,38 +22,35 @@ typedef vector<pii> vpii;
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
+struct Item{
+    int value;
+    int weight;
+};
 
-void solve() 
+
+bool comp ( Item i1 , Item i2 )
 {
-    int n , a , b  ; 
-    cin>>n>>a>>b ; 
-    vi v( n , 0 ) ;
-    f( i , 0 , n )cin>>v[i] ; 
-    int cp = 0 ; 
-    int cost = 0 ; 
-    for( int i = 1 ; i < n ; i++ )
-    {
-        if( a * ( v[i-1] - cp ) + b*( v[i] - v[i-1]) <= b * ( v[i] - cp ) )
-        {
-            // cost += a * abs( v[i-1] - cp ) + b*( v[i] - v[i-1]) ; 
-             cp = v[i-1] ; 
-        }
-        // else cost += b * ( v[i] - cp ) ; 
-    }
-    // cost = b*(v[0]) ;
-    cout<<cp<<endl;
-    int cp1 = 0 ; 
-    for( int i = 0 ; i < n ; i++ )
-    {
-        cost += b * ( v[i] - cp1) ; 
-        if( cp1 < cp ) 
-        {
-           cost += a*( v[i] - cp1 ) ; 
-           cp1 = v[i] ;
-        }
-    }
-    cout<<cost<<endl ;
+    return (i1.value * i2.weight ) > i2.value * i1.weight ;
 }
+double fractionalKnapsack(int W, Item arr[], int n)
+    {
+        // Your code here
+        sort( arr , arr + n , comp ) ;
+        f( i ,  0 , n )cout<<arr[i].value << " "<< arr[i].weight<<endl;
+        int wgt = 0 ;
+        double max_profit = 0 ;
+        for( int i = 0  ; i < n ; i++ )
+        {
+            if( wgt + arr[i].weight <=  W  )max_profit += arr[i].value ;
+            else 
+            {
+                max_profit += ((W - wgt )/( 1.0 * arr[i].weight)) * arr[i].value ;
+                break ;
+            }
+            wgt += arr[i].weight ;
+        }
+        return max_profit ;
+    }
 signed main()
 {
     ios::sync_with_stdio(false);
@@ -62,7 +59,15 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        int n , w ;
+        cin>>n>>w ;
+        Item it[n] ;
+        f( i , 0 , n )
+        {
+            cin>>it[i].value >> it[i].weight ;
+        }
+        double ans = fractionalKnapsack( w , it , n ) ;
+        cout<<ans<<endl;
     }
     return 0;
 }

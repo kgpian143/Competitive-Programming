@@ -23,28 +23,34 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int data;
+    Node* left, * right;
+}; 
+
+void traverse( Node *node , map< int , vector<int> > &m , int d )
+{
+    if( node == NULL)return ;
+    m[d].push_back(node->data) ;
+    traverse( node->left , m , d+1 ) ;
+    traverse( node->right , m , d ) ;
+}
+
+vector<int> diagonal(Node *root)
+{
+   // your code here
+    map< int , vector<int> > m ;
+    vector<int> ans ;
+    traverse( root , m  , 1 ) ;
+    for( auto it : m )
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        for( auto it1 : it.second )
+        {
+            ans.push_back(it1) ;
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
+    return ans  ;
 }
 signed main()
 {

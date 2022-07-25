@@ -23,29 +23,37 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct  Node 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int data;
+    Node *left ;
+    Node *right ;
+};
+bool iBSTutil( Node *root , int &min_val , int &max_val )
+{
+    if( root == NULL )return true ;
+    if(iBSTutil( root->left , min_val , max_val ) && iBSTutil( root->right , min_val , max_val ))
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        bool ans = true ;
+        if( root->left )
+        {
+            if( root->data <=  min_val ) return false 
+            else 
+            {}
+        }
+
     }
-    // b = b - rem ; 
-    while( b-- > 0)
-    {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
-    }
-    s.pop_back() ;
-    cout<<s<<endl;
 }
+class Solution
+{
+    public:
+    //Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root) 
+    {
+        // Your code here
+
+    }
+};
 signed main()
 {
     ios::sync_with_stdio(false);

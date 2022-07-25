@@ -21,30 +21,29 @@ typedef vector<pii> vpii;
 #define lb lower_bound
 #define ub upper_bound 
 #define all(v) v.begin() , v.end() 
+#define getv(v,n) for( int i = 0 ; i < n ; i++)cin>>v[i];
+#define putv(v) for(auto it : v )cout<<it<<' ';
+// #define getvv(v,n,m)for(int i = 0 ; i < n ; i++ )f(j,0 ,m)cin>>v[i][j] 
 const int N = 2e5 + 5; 
 
-void solve() 
+void solve( vvi  v  , int n , int m ) 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    mii mp ;
+    // m[0] = 1 ;
+    f( i , 0 , n)
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        f( j , 0 , m )
+        {
+            mp[v[i][j]]++ ;
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    vi  ans ;
+    for( auto it : mp )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( it.second == n )ans.push_back(it.first) ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    for( auto it : ans )cout<<it<<" ";
+    cout<<endl;
 }
 signed main()
 {
@@ -54,7 +53,14 @@ signed main()
     cin>>t ;
     while(t-- > 0 )
     {
-        solve();
+        int n , m ;
+        cin>>n>>m ;
+        vvi  v( n , vi(m)) ;
+        f( i , 0 , n )
+        {
+            f( j , 0 , m )cin>>v[i][j] ;
+        }
+        solve(v , n , m);
     }
     return 0;
 }

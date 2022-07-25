@@ -23,29 +23,48 @@ typedef vector<pii> vpii;
 #define all(v) v.begin() , v.end() 
 const int N = 2e5 + 5; 
 
-void solve() 
+struct Node
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
-    {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+    int data;
+    struct Node *left;
+    struct Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+}; 
+// */
+
+class Solution{
+  public:
+    // The given root is the root of the Binary Tree
+    // Return the root of the generated BST
+    void traverse( Node *root , vector<int> &v )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        if( !root )return ;
+        traverse( root->left , v ) ;
+        v.push_back(root->data) ;
+        traverse( root->right , v) ;
     }
-    s.pop_back() ;
-    cout<<s<<endl;
-}
+    void arrtobst( Node *root , vector<int> & v)
+    {
+         if( !root )return ;
+         arrtobst( root , v );
+         root->data = v.back() ;
+         v.pop_back() ;
+         arrtobst( root->right , v) ;
+    }
+    Node *binaryTreeToBST (Node *root)
+    {
+        //Your code goes here
+        vector<int> arr ;
+        traverse( root , arr ) ;
+        sort(arr.begin() , arr.end());
+        reverse(arr.begin() , arr.end());
+        arrtobst( root , arr );
+    }
+};
 signed main()
 {
     ios::sync_with_stdio(false);

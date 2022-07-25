@@ -25,26 +25,42 @@ const int N = 2e5 + 5;
 
 void solve() 
 {
-    int n , r  ,b ; 
-    cin>>n>>r>>b ; 
-    string s  ; 
-    b++;
-    int k = r/(b)  ; 
-    int rem = r % (b) ; 
-    b = b - rem ; 
-    while( rem-- > 0 )
+    int n ;
+    cin>>n ; 
+    vi v( 2*n , 0 ) ;
+    vi even ;
+    int cnt1 = 0 , cnt2 = 0 ;
+    f( i , 0 , 2*n ) 
     {
-        for( int i = 0 ; i <= k ; i++ )s.push_back('R');
-        s.push_back('B') ; 
+        cin>>v[i] ;
+        if( v[i] & 1) cnt1++ ;
+        else 
+        {
+            cnt2++ ;
+            int k = 0 ;
+            while( (v[i] & 1) == 0 )
+            {
+                k++ ;
+                v[i] /= 2;
+            }
+            even.push_back(k) ;
+        }
     }
-    // b = b - rem ; 
-    while( b-- > 0)
+    sort( all(even)) ;
+    if( cnt1 >= cnt2 )
     {
-        for( int i = 0 ; i < k ; i++ )s.push_back('R') ;
-        s.push_back('B') ;
+        cout<<(cnt1 - cnt2)/2 << endl; 
     }
-    s.pop_back() ;
-    cout<<s<<endl;
+    else 
+    {
+        int a = (cnt2 - cnt1)/2 ;
+        int ans = 0 ;
+        f( i , 0 , a )
+        {
+            ans += even[i] ;
+        }
+        cout<<ans<<endl; 
+    }
 }
 signed main()
 {
