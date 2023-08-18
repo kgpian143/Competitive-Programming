@@ -26,7 +26,7 @@ bool good( int x )
     {
         int k = x / ( z[i] * t[i] + y[i]) ;
         int r = x % ( z[i] * t[i] + y[i]) ;
-        ans += k*z[i] + min(r , z[i] * t[i])/ t[i]  ;
+        ans += k*z[i] + min(r/t[i] , z[i])  ;
     }
     return ans >= m ;
 } 
@@ -58,8 +58,8 @@ signed main()
     {
         int k = h / ( z[i] * t[i] + y[i]) ;
         int r = h % ( z[i] * t[i] + y[i]) ;
-        cnt +=  k*z[i] + min(r , z[i] * t[i])/ t[i] ;
-        ans.push_back( k*z[i] + (min(r , z[i] * t[i]))/ t[i]) ;
+        cnt +=  k*z[i] + min(r/t[i] , z[i]) ;
+        ans.push_back( k*z[i] + min(r/t[i] , z[i]) ) ;
     }
     // sort(all(ans)) ;
     cnt -= m ;

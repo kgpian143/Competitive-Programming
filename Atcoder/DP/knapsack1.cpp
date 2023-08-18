@@ -1,37 +1,62 @@
-#include <bits/stdc++.h>
-using namespace std;
-const int N = 1e5 + 10;
-int w[105], v[105];
- int dp[105][N];
-int solve( int k, int n)
-{
-    if (dp[n][k] != -1)
-        return dp[n][k];
-    if (n == 0 || k == 0)
-    {
-        return dp[0][0] = 0;
-    }
+#include<bits/stdc++.h>
+using namespace std ;
+#define mod 1000000007 
+#define int  long long  
+#define f(i,a,b) for( int i = a ; i < b ; i++ ) 
+#define lb lower_bound
+#define ub upper_bound 
+#define all(v) v.begin() , v.end() 
+typedef vector<int> vi;
+typedef vector<bool> vb;
+typedef vector<vector<int>> vvi; 
+typedef vector<string> vs; 
+typedef vector<int> vl;
+typedef vector<vector<int>> vvl; 
+typedef vector<vector<bool>> vvb ;
+typedef map<int, int> mii;
+typedef map<int, int> mll;
+typedef pair<int, int> pii;  
+typedef pair<int, bool> pib; 
+typedef pair<int, int> pll; 
+typedef unsigned int ull; 
+typedef long double ld; 
+typedef int ll; 
+typedef vector<vector<int>> vvi;
+typedef vector<pii> vpii;
+const int N = 1e5 + 5 ;
 
-    if (k >= w[n - 1])
-    {
-        //  int k1 = solve(k, n - 1) ;
-        //  int k2 = v[n-1]+ solve(k - w[n - 1], n - 1) ;
-        //  int p ;
-        // if( k1 > k2 )p = k1 ;
-        // else p = k2 ;
-        return dp[n][k] = max(solve(k, n - 1), v[n - 1] + solve(k - w[n - 1], n - 1));
+void solve()
+{
+    int n , w ;
+    cin >> n >> w ;
+    vi wgt(n, 0 ) , val(n,0) ;
+    vector<vi> dp( n + 1 , vi ( w + 1 , 0 ) ) ;
+
+    for( int i = 0 ; i < n ; i++){
+        cin >> wgt[i];
+        cin >> val[i];
     }
-    else
-        return dp[n][k] = solve(k, n - 1);
+    for( int i = 1 ; i <= n ; i++)
+    {
+        for( int j = 1 ; j <= w ; j++)
+        {
+            dp[i][j] =  dp[i-1][j] ;
+            if( wgt[i-1] > j ) continue;
+
+            dp[i][j] = max( dp[i][j] , dp[i-1][j-wgt[i-1]] + val[i-1]) ;
+        }
+    }
+    cout << dp[n][w] << endl ;
 }
-
-int main()
+signed main()
 {
-    memset(dp, -1, sizeof(dp));
-    int n, wt;
-    cin >> n >> wt;
-    for (int i = 0; i < n; i++)
-        cin >> w[i] >> v[i];
-    cout << solve(wt, n);
+    ios::sync_with_stdio(false);
+    cin.tie(0) ;
+    int t = 1; 
+    // cin>>t ; 
+    while(t-- > 0 )
+    {
+        solve() ;
+    }
     return 0;
 }
